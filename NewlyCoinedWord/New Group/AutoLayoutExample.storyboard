@@ -37,7 +37,7 @@
                                     <action selector="wordButtonCliked:" destination="4JW-GH-IYb" eventType="touchUpInside" id="ubF-1A-te2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2tZ-M0-hLD">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2tZ-M0-hLD">
                                 <rect key="frame" x="115" y="143" width="98" height="35"/>
                                 <color key="backgroundColor" red="0.31499704350000002" green="0.82630259719999999" blue="0.58859355099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
@@ -46,7 +46,7 @@
                                     <action selector="wordButtonCliked:" destination="4JW-GH-IYb" eventType="touchUpInside" id="0cA-sK-WUn"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NFA-xg-Z6K">
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NFA-xg-Z6K">
                                 <rect key="frame" x="228.99999999999997" y="143" width="68.666666666666657" height="35"/>
                                 <color key="backgroundColor" red="0.28400344830000002" green="0.69611049609999998" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>

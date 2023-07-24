@@ -15,7 +15,11 @@ class NewlyWordViewController: UIViewController {
      "별다줄": "별걸 다 줄인다",
      "금사빠": "금방 사랑에 빠지는",
      "TMT": "투머치토커; 말이 많은 사람",
-     "JMT": "매우 맛있다"
+     "JMT": "매우 맛있다",
+     "롬곡옾높": "폭풍눈물",
+     "만반잘부": "만나서 반가워 잘 부탁해",
+     "많관부": "많은 관심 부탁",
+     "좋댓구알": "좋아요 댓글 구독 알림설정"
     ]
     
     @IBOutlet var wordTextField: UITextField!
@@ -35,9 +39,10 @@ class NewlyWordViewController: UIViewController {
         designSearchButton()
         designTextField()
         
-        setWords(word1)
-        setWords(word2)
-        setWords(word3)
+        designWordButton(word1)
+        designWordButton(word2)
+        designWordButton(word3)
+        showRandomWord()
         
     }
     
@@ -54,11 +59,17 @@ class NewlyWordViewController: UIViewController {
     @IBAction func textFieldClicked(_ sender: UITextField) {
         //print("DidEndOnExit") // 엔터키 눌럿을 때
         
-        if (wordDictionary.keys.contains(sender.text!.uppercased())) {
-            resultLabel.text = wordDictionary[sender.text!.uppercased()]
-        } else {
-            resultLabel.text = "찾으시는 결과가 없습니다."
+        if let text = sender.text {
+            if (text.count < 2){
+                showAlert()
+            }
+            else if (wordDictionary.keys.contains(text.uppercased())) {
+                resultLabel.text = wordDictionary[text.uppercased()]
+            } else {
+                resultLabel.text = "찾으시는 결과가 없습니다."
+            }
         }
+        
             
         resultLabel.textAlignment = .center
     }
@@ -70,25 +81,16 @@ class NewlyWordViewController: UIViewController {
         searchButtonImage.backgroundColor = .white
     }
     
-    var usedWords : [String] = []
-    func setWords(_ wordButton: UIButton){
+    func designWordButton(_ wordButton: UIButton){
         
         wordButton.backgroundColor = .white
         wordButton.layer.borderWidth = 2
         wordButton.layer.borderColor = UIColor.black.cgColor
-        wordButton.titleLabel?.tintColor = .black
         wordButton.layer.cornerRadius = 10
         
-        var randomWord = wordDictionary.randomElement()?.key
-        
-        while (true){
-            if usedWords.contains(randomWord!) {
-                randomWord = wordDictionary.randomElement()?.key
-            } else {
-                usedWords.append(randomWord!)
-                wordButton.setTitle(randomWord, for: .normal)
-                return
-            }
+        //wordButton.titleLabel?.tintColor = .black
+        if let title = wordButton.titleLabel {
+            title.tintColor = .black
         }
     }
     
@@ -102,8 +104,26 @@ class NewlyWordViewController: UIViewController {
         wordTextField.layer.borderWidth = 1
     }
     
+    func showRandomWord(){
+        let shuffledDict = wordDictionary.shuffled()
+//        print(wordDictionary)
+//        print(shuffledDict[0].key)
+        word1.setTitle(shuffledDict[word1.tag].key, for: .normal)
+        word2.setTitle(shuffledDict[word2.tag].key, for: .normal)
+        word3.setTitle(shuffledDict[word3.tag].key, for: .normal)
+    }
+    
     @IBAction func searchButtonClicked(_ sender: UIButton) {
         textFieldClicked(wordTextField)
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "두글자 이상 작성해주세요!", message: "😛", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(cancel)
+        alert.addAction(ok)
+        present(alert, animated: true)
     }
     
 }
