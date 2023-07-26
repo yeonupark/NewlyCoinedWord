@@ -8,19 +8,38 @@
 import UIKit
 
 class NewlyWordViewController: UIViewController {
+    enum NewlyWord: String, CaseIterable {
+        case 알잘딱깔센 = "알아서 잘 딱 깔끔하게 센스있게"
+        case 오저치고 = "오늘 저녁 치킨 고"
+        case 별다줄 = "별걸 다 줄인다"
+        case 금사빠 = "금방 사랑에 빠지는"
+        case TMT = "투머치토커; 말이 많은 사람"
+        case JMT = "매우 맛있다"
+        case 롬곡옾높 = "폭풍눈물"
+        case 만반잘부 = "만나서 반가워 잘 부탁해"
+        case 많관부 = "많은 관심 부탁"
+        case 좋댓구알 = "좋아요 댓글 구독 알림설정"
+        
+        var word: String{
+            String(describing: self)
+        }
+    }
     
-    var wordDictionary : [String: String] =
-    ["알잘딱깔센": "알아서 잘 딱 깔끔하게 센스있게",
-     "오저치고": "오늘 저녁 치킨 고",
-     "별다줄": "별걸 다 줄인다",
-     "금사빠": "금방 사랑에 빠지는",
-     "TMT": "투머치토커; 말이 많은 사람",
-     "JMT": "매우 맛있다",
-     "롬곡옾높": "폭풍눈물",
-     "만반잘부": "만나서 반가워 잘 부탁해",
-     "많관부": "많은 관심 부탁",
-     "좋댓구알": "좋아요 댓글 구독 알림설정"
-    ]
+    
+    let keywords = NewlyWord.allCases
+    
+//    var wordDictionary : [String: String] =
+//    ["알잘딱깔센": "알아서 잘 딱 깔끔하게 센스있게",
+//     "오저치고": "오늘 저녁 치킨 고",
+//     "별다줄": "별걸 다 줄인다",
+//     "금사빠": "금방 사랑에 빠지는",
+//     "TMT": "투머치토커; 말이 많은 사람",
+//     "JMT": "매우 맛있다",
+//     "롬곡옾높": "폭풍눈물",
+//     "만반잘부": "만나서 반가워 잘 부탁해",
+//     "많관부": "많은 관심 부탁",
+//     "좋댓구알": "좋아요 댓글 구독 알림설정"
+//    ]
     
     @IBOutlet var wordTextField: UITextField!
     @IBOutlet var searchButtonImage: UIImageView!
@@ -43,34 +62,57 @@ class NewlyWordViewController: UIViewController {
         designWordButton(word2)
         designWordButton(word3)
         showRandomWord()
-        
     }
     
     // 1. 버튼 클릭
     @IBAction func wordButtonCliked(_ sender: UIButton) {
-        //print(sender.currentTitle)
-        //print(sender.textLabel?.text)
+        
         //2. 텍스트필드에 내용 띄우기
         wordTextField.text = sender.currentTitle
         //3. 레이블에 내용 띄우기
         textFieldClicked(wordTextField)
+        
+        view.endEditing(true)
     }
     
     @IBAction func textFieldClicked(_ sender: UITextField) {
         //print("DidEndOnExit") // 엔터키 눌럿을 때
         
-        if let text = sender.text {
-            if (text.count < 2){
-                showAlert()
-            }
-            else if (wordDictionary.keys.contains(text.uppercased())) {
-                resultLabel.text = wordDictionary[text.uppercased()]
-            } else {
-                resultLabel.text = "찾으시는 결과가 없습니다."
-            }
+//        if let text = sender.text {
+//            if (text.count < 2){
+//                showAlert()
+//            }
+//            else if (wordDictionary.keys.contains(text.uppercased())) {
+//                resultLabel.text = wordDictionary[text.uppercased()]
+//            } else {
+//                resultLabel.text = "찾으시는 결과가 없습니다."
+//            }
+//        }
+        
+        guard let text = sender.text else {
+            print("오류 발생")
+            return
+        }
+        if (text.count < 2) {
+            showAlert()
+        }
+        let answer: String
+        
+        switch text.uppercased() {
+        case keywords[0].word: answer =  NewlyWord.알잘딱깔센.rawValue
+        case keywords[1].word: answer =  NewlyWord.오저치고.rawValue
+        case keywords[2].word: answer =  NewlyWord.별다줄.rawValue
+        case keywords[3].word: answer =  NewlyWord.금사빠.rawValue
+        case keywords[4].word: answer =  NewlyWord.TMT.rawValue
+        case keywords[5].word: answer =  NewlyWord.JMT.rawValue
+        case keywords[6].word: answer =  NewlyWord.롬곡옾높.rawValue
+        case keywords[7].word: answer =  NewlyWord.만반잘부.rawValue
+        case keywords[8].word: answer =  NewlyWord.많관부.rawValue
+        case keywords[9].word: answer =  NewlyWord.좋댓구알.rawValue
+        default: answer = "찾으시는 결과가 없습니다."
         }
         
-            
+        resultLabel.text = answer
         resultLabel.textAlignment = .center
     }
     
@@ -105,16 +147,22 @@ class NewlyWordViewController: UIViewController {
     }
     
     func showRandomWord(){
-        let shuffledDict = wordDictionary.shuffled()
-//        print(wordDictionary)
-//        print(shuffledDict[0].key)
-        word1.setTitle(shuffledDict[word1.tag].key, for: .normal)
-        word2.setTitle(shuffledDict[word2.tag].key, for: .normal)
-        word3.setTitle(shuffledDict[word3.tag].key, for: .normal)
+//        let shuffledDict = wordDictionary.shuffled()
+////        print(wordDictionary)
+////        print(shuffledDict[0].key)
+//        word1.setTitle(shuffledDict[word1.tag].key, for: .normal)
+//        word2.setTitle(shuffledDict[word2.tag].key, for: .normal)
+//        word3.setTitle(shuffledDict[word3.tag].key, for: .normal)
+        
+        let shuffledWords = keywords.shuffled()
+        word1.setTitle(shuffledWords[0].word, for: .normal)
+        word2.setTitle(shuffledWords[1].word, for: .normal)
+        word3.setTitle(shuffledWords[2].word, for: .normal)
     }
     
     @IBAction func searchButtonClicked(_ sender: UIButton) {
         textFieldClicked(wordTextField)
+        view.endEditing(true)
     }
     
     func showAlert() {
