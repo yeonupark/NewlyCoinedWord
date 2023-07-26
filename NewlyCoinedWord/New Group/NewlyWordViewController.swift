@@ -89,13 +89,21 @@ class NewlyWordViewController: UIViewController {
 //            }
 //        }
         
-        guard let text = sender.text else {
+        guard var text = sender.text else {
             print("오류 발생")
             return
         }
-        if (text.count < 2) {
-            showAlert()
+        
+        text = text.trimmingCharacters(in: .whitespaces)
+        
+        if (text.count == 0){
+            showAlert(0)
+            return
+        } else if (text.count == 1){
+            showAlert(1)
+            return
         }
+        
         let answer: String
         
         switch text.uppercased() {
@@ -114,6 +122,7 @@ class NewlyWordViewController: UIViewController {
         
         resultLabel.text = answer
         resultLabel.textAlignment = .center
+            
     }
     
     
@@ -165,8 +174,17 @@ class NewlyWordViewController: UIViewController {
         view.endEditing(true)
     }
     
-    func showAlert() {
-        let alert = UIAlertController(title: "두글자 이상 작성해주세요!", message: "😛", preferredStyle: .alert)
+    func showAlert(_ ver: Int) {
+        
+        let sentence: String
+        
+        switch ver{
+        case 0: sentence = "내용을 입력해주세요!"
+        case 1: sentence = "두글자 이상 작성해주세요!"
+        default: sentence = "오류가 발생했습니다."
+        }
+        
+        let alert = UIAlertController(title: sentence, message: "😛", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         let ok = UIAlertAction(title: "확인", style: .default)
         alert.addAction(cancel)
